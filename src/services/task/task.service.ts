@@ -1,44 +1,49 @@
-import { Injectable } from '@nestjs/common';
-import { Prisma, Task } from '@prisma/client';
+import { TaskDto } from 'src/dtos/task/task.dto';
+import { Task } from 'src/entities/task';
+import { DeleteResult, getConnection, InsertResult, Repository, UpdateResult } from 'typeorm';
 
-import { PrismaService } from '../lib/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TaskService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    @InjectRepository(Task)
+    private taskRepository: Repository<Task>,
+  ) {}
 
   async getAllTask(): Promise<Task[]> {
-    const result = this.prisma.task.findMany();
+    const result = this.taskRepository.find();
     return result;
   }
 
-  async getOneTask(param: Prisma.TaskWhereUniqueInput): Promise<Task> {
-    const result = this.prisma.task.findUnique({
-      where: { id: Number(param.id) },
-    });
+  async getOneTask(id: number): Promise<Task> {
+    const result = this.taskRepository.findOne(id);
     return result;
   }
 
-  async createTask(data: Prisma.TaskCreateInput): Promise<Task> {
-    const result = this.prisma.task.create({
-      data,
-    });
+  async createTask(data: Partial<TaskDto>): Promise<InsertResult> {
+    const result = this.taskRepository.insert(data);
     return result;
   }
 
-  async updateTask(params: Prisma.TaskUpdateArgs): Promise<Task> {
-    const { data, where } = params;
-    const result = this.prisma.task.update({
-      data,
-      where,
-    });
+  async updateTask(data: Partial<TaskDto>): Promise<Task> {
+    const result = this.taskRepository.save(data);
     return result;
   }
 
-  async deleteTask(param: Prisma.TaskWhereUniqueInput): Promise<Task> {
-    const result = this.prisma.task.delete({
-      where: { id: Number(param.id) },
-    });
+  async deleteTask(id: number): Promise<DeleteResult> {
+    const result = this.taskRepository.delete(id);
+    return result;
+  }
+
+  async doneTask(id: number, isDone: boolean): Promise<UpdateResult> {
+    const result = await getConnection()
+      .createQueryBuilder()
+      .update(Task)
+      .set({ isDone })
+      .where('id = :id', { id })
+      .execute();
     return result;
   }
 }
