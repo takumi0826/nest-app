@@ -1,4 +1,4 @@
-import { IsNotEmpty, isNumber } from 'class-validator';
+import { IsNotEmpty, isNumber, MaxLength } from 'class-validator';
 
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
@@ -10,6 +10,7 @@ export class TaskDto {
   @ApiProperty()
   private title: string;
 
+  @MaxLength(500)
   @ApiProperty()
   private content?: string;
 

@@ -6,6 +6,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
+  // TaskエンティティをTaskServiceで使えるようにする
   imports: [TypeOrmModule.forFeature([Task])],
   controllers: [TaskController],
   providers: [TaskService],

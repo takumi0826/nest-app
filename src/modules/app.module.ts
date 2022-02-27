@@ -1,4 +1,5 @@
 import { Task } from 'src/entities/task';
+import { User } from 'src/entities/user';
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -19,7 +20,7 @@ import { TaskModule } from './task/task.module';
       username: 'root',
       password: 'root',
       database: 'todos',
-      entities: [Task],
+      entities: [Task, User],
       synchronize: true,
       logging: true,
     }),

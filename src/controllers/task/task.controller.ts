@@ -1,13 +1,13 @@
-import { TaskResponseDto } from 'src/dtos/task/task-response.dto';
 import { TaskDto } from 'src/dtos/task/task.dto';
 import { Task } from 'src/entities/task';
 import { TaskService } from 'src/services/task/task.service';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('task')
+@ApiTags('Task')
 export class TaskController {
   constructor(private taskService: TaskService) {}
 
@@ -16,7 +16,7 @@ export class TaskController {
     status: 200,
     description: 'The found record',
     isArray: true,
-    type: TaskResponseDto,
+    type: Task,
   })
   getAllTask(): Promise<Task[]> {
     return this.taskService.getAllTask();
@@ -26,7 +26,7 @@ export class TaskController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: TaskResponseDto,
+    type: Task,
   })
   getOneTask(@Query() id: number): Promise<Task> {
     return this.taskService.getOneTask(id);
@@ -40,7 +40,7 @@ export class TaskController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: TaskResponseDto,
+    type: Task,
   })
   createTask(@Body() data: TaskDto): Promise<InsertResult> {
     return this.taskService.createTask(data);
@@ -54,7 +54,7 @@ export class TaskController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: TaskResponseDto,
+    type: Task,
   })
   updateTask(@Body() data: TaskDto): Promise<Task> {
     return this.taskService.updateTask(data);
@@ -68,7 +68,7 @@ export class TaskController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: TaskResponseDto,
+    type: Task,
   })
   deleteTask(@Query() id: number): Promise<DeleteResult> {
     return this.taskService.deleteTask(id);
@@ -82,7 +82,7 @@ export class TaskController {
   @ApiResponse({
     status: 200,
     description: 'The found record',
-    type: TaskResponseDto,
+    type: Task,
   })
   doneTask(
     @Body() param: { id: number; isDone: boolean },
