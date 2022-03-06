@@ -4,16 +4,16 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class TaskDto {
   @ApiProperty()
-  private id: number;
+  public id: number;
 
   @IsNotEmpty()
   @ApiProperty()
-  private title: string;
+  public title: string;
 
   @MaxLength(500)
   @ApiProperty()
-  private content?: string;
+  public content?: string;
 
   @ApiProperty({ required: false })
-  private isDone?: boolean;
+  public isDone?: boolean;
 }

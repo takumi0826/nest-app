@@ -3,10 +3,12 @@ import { Task } from 'src/entities/task';
 import { TaskService } from 'src/services/task/task.service';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('task')
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('Task')
 export class TaskController {
   constructor(private taskService: TaskService) {}
