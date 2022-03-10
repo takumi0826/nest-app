@@ -16,8 +16,8 @@ export class AuthController {
   ) {}
 
   @UseGuards(AuthGuard('local')) // passport-local戦略を付与する
-  @Post('login')
-  async login(@Request() req: { user: PasswordOmitUser }) {
+  @Post('sign-in')
+  async signIn(@Request() req: { user: PasswordOmitUser }) {
     // LocalStrategy.validate()で認証して返した値がreq.userに入ってる
     const user = req.user;
 
@@ -25,8 +25,8 @@ export class AuthController {
     return this.authService.login(user);
   }
 
-  @Post('create')
-  async create(@Body() user: UserDto): Promise<InsertResult> {
+  @Post('sign-up')
+  async signUp(@Body() user: UserDto): Promise<InsertResult> {
     return this.userService.create(user);
   }
 
