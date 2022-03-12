@@ -1,10 +1,15 @@
-import { BaseEntity, Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BaseEntity, Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn
+} from 'typeorm';
 
 import { ApiProperty } from '@nestjs/swagger';
+
+import { Task } from './task';
 
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @OneToMany(() => Task, (task) => task.userId)
   @ApiProperty()
   id: number;
 

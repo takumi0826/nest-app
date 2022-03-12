@@ -1,9 +1,12 @@
 import { TaskDto } from 'src/dtos/task/task.dto';
 import { Task } from 'src/entities/task';
 import { TaskService } from 'src/services/task/task.service';
+import { JwtPayload, PasswordOmitUser } from 'src/types/type';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import {
+    Body, Controller, Delete, Get, Post, Put, Query, Request, UseGuards
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -20,8 +23,11 @@ export class TaskController {
     isArray: true,
     type: Task,
   })
-  getAllTask(): Promise<Task[]> {
-    return this.taskService.getAllTask();
+  getAllTask(@Request() req: { user: JwtPayload }): Promise<Task[]> {
+    const { userId } = req.user;
+    console.log(req.user);
+
+    return this.taskService.getAllTask(userId);
   }
 
   @Get('/get-one/v1')
@@ -44,7 +50,13 @@ export class TaskController {
     description: 'The found record',
     type: Task,
   })
-  createTask(@Body() data: TaskDto): Promise<InsertResult> {
+  createTask(
+    @Body() data: TaskDto,
+    @Request() req: { user: JwtPayload },
+  ): Promise<InsertResult> {
+    data.userId = req.user.userId;
+    console.log(data);
+
     return this.taskService.createTask(data);
   }
 

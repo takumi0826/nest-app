@@ -2,7 +2,7 @@ import { UserDto } from 'src/dtos/user/user.dto';
 import { User } from 'src/entities/user';
 import { AuthService } from 'src/services/auth/auth.service';
 import { UserService } from 'src/services/user/user.service';
-import { PasswordOmitUser } from 'src/types/type';
+import { JwtPayload, PasswordOmitUser } from 'src/types/type';
 import { InsertResult } from 'typeorm';
 
 import { Body, Controller, Get, Post, Request, Response, UseGuards } from '@nestjs/common';
@@ -35,7 +35,7 @@ export class AuthController {
    */
   @UseGuards(AuthGuard('jwt')) // passport-jwt戦略を付与する
   @Get('profile')
-  getProfile(@Request() req: { user: PasswordOmitUser }) {
+  getProfile(@Request() req: { user: JwtPayload }) {
     // JwtStrategy.validate()で認証して返した値がreq.userに入ってる
     const user = req.user;
 

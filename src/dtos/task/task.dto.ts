@@ -6,6 +6,9 @@ export class TaskDto {
   @ApiProperty()
   public id: number;
 
+  @ApiProperty()
+  public userId: number;
+
   @IsNotEmpty()
   @ApiProperty()
   public title: string;
