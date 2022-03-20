@@ -5,7 +5,15 @@ import { UserService } from 'src/services/user/user.service';
 import { JwtPayload, PasswordOmitUser } from 'src/types/type';
 import { InsertResult } from 'typeorm';
 
-import { Body, Controller, Get, Post, Request, Response, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  Response,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')

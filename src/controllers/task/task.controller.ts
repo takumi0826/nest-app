@@ -5,7 +5,15 @@ import { JwtPayload, PasswordOmitUser } from 'src/types/type';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 
 import {
-    Body, Controller, Delete, Get, Post, Put, Query, Request, UseGuards
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Query,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
