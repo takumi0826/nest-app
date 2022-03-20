@@ -1,9 +1,3 @@
-import { TaskDto } from 'src/dtos/task/task.dto';
-import { Task } from 'src/entities/task';
-import { TaskService } from 'src/services/task/task.service';
-import { JwtPayload, PasswordOmitUser } from 'src/types/type';
-import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
-
 import {
   Body,
   Controller,
@@ -14,9 +8,14 @@ import {
   Query,
   Request,
   UseGuards,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+} from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
+import { ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { TaskDto } from 'src/dtos/task/task.dto'
+import { Task } from 'src/entities/task'
+import { TaskService } from 'src/services/task/task.service'
+import { JwtPayload, PasswordOmitUser } from 'src/types/type'
+import { DeleteResult, InsertResult, UpdateResult } from 'typeorm'
 
 @Controller('task')
 @UseGuards(AuthGuard('jwt'))
@@ -32,10 +31,10 @@ export class TaskController {
     type: Task,
   })
   getAllTask(@Request() req: { user: JwtPayload }): Promise<Task[]> {
-    const { userId } = req.user;
-    console.log(req.user);
+    const { userId } = req.user
+    console.log(req.user)
 
-    return this.taskService.getAllTask(userId);
+    return this.taskService.getAllTask(userId)
   }
 
   @Get('/get-one/v1')
@@ -45,7 +44,7 @@ export class TaskController {
     type: Task,
   })
   getOneTask(@Query() id: number): Promise<Task> {
-    return this.taskService.getOneTask(id);
+    return this.taskService.getOneTask(id)
   }
 
   @Post('/create/v1')
@@ -60,12 +59,12 @@ export class TaskController {
   })
   createTask(
     @Body() data: TaskDto,
-    @Request() req: { user: JwtPayload },
+    @Request() req: { user: JwtPayload }
   ): Promise<InsertResult> {
-    data.userId = req.user.userId;
-    console.log(data);
+    data.userId = req.user.userId
+    console.log(data)
 
-    return this.taskService.createTask(data);
+    return this.taskService.createTask(data)
   }
 
   @Put('/update/v1')
@@ -79,7 +78,7 @@ export class TaskController {
     type: Task,
   })
   updateTask(@Body() data: TaskDto): Promise<Task> {
-    return this.taskService.updateTask(data);
+    return this.taskService.updateTask(data)
   }
 
   @Delete('/delete/v1')
@@ -93,7 +92,7 @@ export class TaskController {
     type: Task,
   })
   deleteTask(@Query() id: number): Promise<DeleteResult> {
-    return this.taskService.deleteTask(id);
+    return this.taskService.deleteTask(id)
   }
 
   @Put('/done/v1')
@@ -107,8 +106,8 @@ export class TaskController {
     type: Task,
   })
   doneTask(
-    @Body() param: { id: number; isDone: boolean },
+    @Body() param: { id: number; isDone: boolean }
   ): Promise<UpdateResult> {
-    return this.taskService.doneTask(param.id, param.isDone);
+    return this.taskService.doneTask(param.id, param.isDone)
   }
 }

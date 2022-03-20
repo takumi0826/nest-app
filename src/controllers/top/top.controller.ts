@@ -1,6 +1,5 @@
-import { TopService } from 'src/services/top/top.service';
-
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common'
+import { TopService } from 'src/services/top/top.service'
 
 @Controller('top')
 export class TopController {
@@ -8,6 +7,6 @@ export class TopController {
 
   @Get()
   init(): string {
-    return this.topService.findAll();
+    return this.topService.findAll()
   }
 }

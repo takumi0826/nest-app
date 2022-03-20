@@ -1,34 +1,33 @@
+import { ApiProperty } from '@nestjs/swagger'
 import {
   BaseEntity,
   Column,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from 'typeorm';
+} from 'typeorm'
 
-import { ApiProperty } from '@nestjs/swagger';
-
-import { User } from './user';
+import { User } from './user'
 
 @Entity()
 export class Task extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+  id: number
 
   @ManyToOne(() => User, (user) => user.id)
   @ApiProperty()
-  userId: number;
+  userId: number
 
   @Column({ length: 50 })
   @ApiProperty({ maxLength: 50 })
-  title: string;
+  title: string
 
   @Column({ length: 500 })
   @ApiProperty({ maxLength: 500 })
-  content: string;
+  content: string
 
   @Column()
   @ApiProperty()
-  isDone: boolean;
+  isDone: boolean
 }
