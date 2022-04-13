@@ -29,7 +29,14 @@ export class AuthController {
     const user = req.user
 
     // JwtToken を返す
-    return this.authService.login(user)
+    const token = await this.authService.login(user)
+    return {
+      access_token: token.access_token,
+      user: {
+        userId: user.id,
+        userName: user.name,
+      },
+    }
   }
 
   @Post('sign-up')
