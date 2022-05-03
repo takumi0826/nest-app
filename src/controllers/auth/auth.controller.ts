@@ -53,4 +53,10 @@ export class AuthController {
     // 認証に成功したユーザーの情報を返す
     return user
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('authenticated')
+  authenticated() {
+    return true
+  }
 }
