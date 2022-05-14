@@ -27,8 +27,9 @@ export class TaskService {
     return result
   }
 
-  async createTask(data: Partial<TaskDto>): Promise<InsertResult> {
-    const result = this.taskRepository.insert(data)
+  async createTask(data: Pick<TaskDto, 'title' | 'isDone'>): Promise<Task> {
+    const { raw } = await this.taskRepository.insert(data)
+    const result = this.getOneTask(raw.insertId)
     return result
   }
 

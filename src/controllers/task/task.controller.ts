@@ -60,7 +60,7 @@ export class TaskController {
   createTask(
     @Body() data: TaskDto,
     @Request() req: { user: JwtPayload }
-  ): Promise<InsertResult> {
+  ): Promise<Task> {
     data.userId = req.user.userId
     console.log(data)
 
